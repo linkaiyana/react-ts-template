@@ -29,7 +29,7 @@ module.exports = {
     //   "@typescript-eslint/no-inferrable-types": 0
     // }
     rules: {
-
+      "arrow-parens": ["error", "as-needed"],
       "react/react-in-jsx-scope": 0,
       // 允许空接口
       "@typescript-eslint/no-empty-interface": 0,
@@ -76,7 +76,6 @@ module.exports = {
       'react-hooks/exhaustive-deps': 'off',
       // Conflict with prettier
       'arrow-body-style': ['error', 'as-needed'],
-      'arrow-parens': 1,
       'object-curly-newline': 0,
       'implicit-arrow-linebreak': 0,
       'operator-linebreak': 0,
