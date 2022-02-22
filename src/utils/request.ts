@@ -2,7 +2,7 @@
  * @Description:
  * @Author: linkaiyan
  * @Date: 2022-02-18 17:29:58
- * @LastEditTime: 2022-02-22 10:50:11
+ * @LastEditTime: 2022-02-22 14:55:38
  * @LastEditors: linkaiyan
  * @Reference:
  */
@@ -16,6 +16,7 @@ interface ResponseData<T> {
 
   msg: string;
 }
+
 const baseURL = baseUrlConfig[process.env.REACT_APP_ENV as string].baseURL;
 let requestNum: number = 0;
 
@@ -23,14 +24,20 @@ const instance: AxiosInstance = axios.create({
   baseURL,
   timeout: 60000,
   headers: {
-    token: 'a9de74b2c2894705a97c4864ba397bf4-62a25f05-e89c-489a-8850-b6133a203ccd'
+    token: 'a9de74b2c2894705a97c4864ba397bf4-3327ebbb-2e0c-4492-9cff-de6bd2661624'
   },
 });
 
 // 请求拦截
 instance.interceptors.request.use(
   (config: AxiosRequestConfig) => {
-    requestNum++;
+    if(!config.hideLoading) {
+      requestNum++;
+    }
+
+    if(requestNum === 1) {
+      // 展示loading
+    }
 
     return config;
   },
@@ -40,7 +47,9 @@ instance.interceptors.request.use(
 // 响应拦截
 instance.interceptors.response.use(
   (response: AxiosResponse<ResponseData<any>>) => {
-    requestNum--;
+    if(!response.config.hideLoading) {
+      requestNum--;
+    }
     if(requestNum === 0) {
       // 取消loading
     }
@@ -50,7 +59,9 @@ instance.interceptors.response.use(
     return Promise.reject(response.data.msg);
   },
   (error: AxiosError) => {
-    requestNum--;
+    if(!error.config.hideLoading) {
+      requestNum--;
+    }
     if(requestNum === 0) {
       // 取消loading
     }
