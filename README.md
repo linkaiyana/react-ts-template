@@ -1,46 +1,64 @@
-# Getting Started with Create React App
+### 用作移动端
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 卸载antd，安装antd-mobile
+  npm uninstall antd
+  
+## 配置antd-mobile按需引入
+  # craco.config.js修改如下
+    babel:{
+      plugins: [
+        [
+          "import",
+          {
+            "libraryName":"antd-mobile",
+            "libraryDirectory":"es/components",
+            "style":false//设置为true即是less
+          }
+        ]
+      ]
+    },
+  # 并且需要在入口js中引入antd-mobile样式
+    import 'antd-mobile/es/global'
 
-## Available Scripts
+## 配置antd-mobile主题色
+  # 全局css中引入
+    :root:root {
+      --adm-color-primary: #a062d4;
+    }
+## 添加开发时依赖
+  "postcss": "^8.3.0"
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 配置px2vw
+  # 安装依赖"postcss-px-to-viewport-with-include"
+  # craco.config.js添加以下代码
+    style: {
+      postcss: {
+        mode: 'extends',
+        loaderOptions: {
+          postcssOptions: {
+            ident: 'postcss',
+            plugins: [
+              [
+                'postcss-px-to-viewport-with-include',
+                {
+                  unitToConvert: 'px', //需要转换的单位，默认为"px"
+                  viewportWidth: 750, // 视窗的宽度，对应的是我们设计稿的宽度，一般是750
+                  unitPrecision: 6, //单位转换后保留的精度
+                  propList: [
+                    //能转化为vw的属性列表
+                    '*',
+                  ],
+                  viewportUnit: 'vw', // 希望使用的视口单位
+                  fontViewportUnit: 'vw', //字体使用的视口单位
+                  selectorBlackList: [], //需要忽略的CSS选择器，不会转为视口单位，使用原有的px等单位。
+                  minPixelValue: 1, //设置最小的转换数值，如果为1的话，只有大于1的值会被转换
+                  mediaQuery: false, //媒体查询里的单位是否需要转换单位
+                  replace: true, //是否直接更换属性值，而不添加备用属性
+                  // exclude: /(\/|\\)(node_modules)(\/|\\)/, //忽略某些文件夹下的文件或特定文件，例如 'node_modules' 下的文件
+                },
+              ],
+            ],
+          },
+        },
+      },
+    },
