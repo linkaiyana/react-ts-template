@@ -1,4 +1,4 @@
-### 用作移动端
+### 用作移动端，需按以下步骤调整
 
 ## 卸载antd，安装antd-mobile
   npm uninstall antd
