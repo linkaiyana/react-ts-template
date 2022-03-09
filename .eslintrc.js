@@ -29,6 +29,7 @@ module.exports = {
     //   "@typescript-eslint/no-inferrable-types": 0
     // }
     rules: {
+      "react/display-name": 0,
       "arrow-parens": ["error", "as-needed"],
       "react/react-in-jsx-scope": 0,
       // 允许空接口
