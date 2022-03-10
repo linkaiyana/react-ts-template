@@ -1,0 +1,40 @@
+.btn_container {
+  display: flex;
+  justify-content: space-between;
+  width: 280px;
+  margin-bottom: 10px;
+}
+.cur_date {
+  width: 280px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.calendar_wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  width: 280px;
+  .calendar_item {
+    width: 40px;
+    height: 40px;
+    background: @primary-color;
+    line-height: 38px;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    &.title {
+      color: #000;
+      background: pink;
+      font-weight: bold;
+    }
+    &.gray {
+      color: #999;
+      background: #eee;
+    }
+    &.today {
+      color: red;
+      font-weight: bold;
+    }
+  }
+}
