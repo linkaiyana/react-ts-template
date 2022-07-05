@@ -1,17 +1,23 @@
 /*
- * @Description: 
+ * @Description:
  * @Author: linkaiyan
  * @Date: 2022-02-18 14:21:17
- * @LastEditTime: 2022-02-21 15:27:31
+ * @LastEditTime: 2022-07-05 11:48:01
  * @LastEditors: linkaiyan
- * @Reference: 
+ * @Reference:
  */
 
 
 /* craco.config.js */
 const CracoLessPlugin = require('craco-less');
+const SimpleProgressWebpackPlugin = require( 'simple-progress-webpack-plugin' )
 
-module.exports = {
+const config = {
+  webpack: {
+    plugins: [
+      new SimpleProgressWebpackPlugin(),
+    ],
+  },
   babel:{
     plugins: [
       [
@@ -37,4 +43,6 @@ module.exports = {
       },
     },
   ]
-};
+}
+
+module.exports = config;
